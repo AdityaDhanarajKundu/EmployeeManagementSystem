@@ -8,7 +8,9 @@ import com.adityakundu.emsbackend.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeServices{
@@ -35,5 +37,12 @@ public class EmployeeServiceImpl implements EmployeeServices{
     public EmployeeDto getEmployeeById(Long employeeId) {
         Employee employeeOptional = employeeRepo.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException("Employee not found with the id : " + employeeId));
         return EmployeeMapper.mapToEmployeeDto(employeeOptional);
+    }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+        List<Employee> employees = employeeRepo.findAll();
+        //convert the list of employee entity to listt of employeedto
+        return employees.stream().map(EmployeeMapper::mapToEmployeeDto).collect(Collectors.toList());
     }
 }
