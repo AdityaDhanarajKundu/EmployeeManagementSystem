@@ -1,4 +1,5 @@
 // file to define the data structure of the data to be communicated from and to client side and the backend api
+// this will map employeeJpaentity with employee dto and dto to jpa entity
 
 package com.adityakundu.emsbackend.dto;
 
