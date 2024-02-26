@@ -56,4 +56,10 @@ public class EmployeeServiceImpl implements EmployeeServices{
         Employee updEmployee = employeeRepo.save(employee);
         return EmployeeMapper.mapToEmployeeDto(updEmployee);
     }
+
+    @Override
+    public void deleteEmployee(Long empId) {
+        Employee employee = employeeRepo.findById(empId).orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + empId));
+        employeeRepo.deleteById(empId);
+    }
 }
