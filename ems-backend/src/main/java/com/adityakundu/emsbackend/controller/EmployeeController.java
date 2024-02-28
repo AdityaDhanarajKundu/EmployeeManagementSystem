@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")   // to handle the cors error enabling any client side api to send request
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/employees")
