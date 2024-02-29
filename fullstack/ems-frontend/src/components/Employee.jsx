@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { createEmployee } from "../services/EmployeeService";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 function Employee() {
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
   const [email, setEmail] = useState("");
+  const {id} = useParams();
 
   // state variable to hold the form validation errors
   const [errors, setErrors] = useState({
@@ -65,12 +66,20 @@ function Employee() {
     return valid;
   }
 
+  function pageTitle(){
+    if(id){
+      return <h2 className="text-center">Update Employee</h2>;
+    }else{
+      return <h2 className="text-center">Add Employee</h2>;
+    }
+  }
+
   return (
     <div className="container">
       <br />
       <div className="row mt-3">
         <div className="card col-md-6 offset-md-3 offset-md-3">
-          <h2 className="text-center">Add Employee</h2>
+          {pageTitle()}
           <div className="card-body">
             <form>
               <div className="form-group mb-2">
