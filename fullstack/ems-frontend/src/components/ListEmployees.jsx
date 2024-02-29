@@ -1,18 +1,24 @@
 import { useEffect, useState } from 'react';
-import { getEmployees } from '../services/EmployeeService';
+import { deleteEmployee, getEmployees } from '../services/EmployeeService';
 import {useNavigate} from 'react-router-dom';
 
 function ListEmployees() {
   const [employees, setEmployees] = useState([]); 
   const navigate = useNavigate(); 
 
-  useEffect(()=>{
-    getEmployees().then((response)=>{
+  function getAllEmployees(){
+    getEmployees()
+      .then((response) => {
         setEmployees(response.data);
-    }).catch((error)=>{
+      })
+      .catch((error) => {
         console.error(error);
-    });
-  },[employees]);
+      });
+  }
+
+  useEffect(()=>{
+    getAllEmployees();
+  },[]);
     
   // static data to create the table for the employees
 //   const sampleData = [
@@ -41,6 +47,18 @@ function ListEmployees() {
 
   function updateEmployee(id){
     navigate(`/editEmployee/${id}`);
+  }
+
+  function removeEmployee(id){
+    console.log(id);
+
+    deleteEmployee(id).then((response)=>{
+        alert('Employee deleted successfully');
+        getAllEmployees();
+    }).catch((error)=>{
+        console.error(error);
+        alert('Failed to delete employee');
+    });
   }
   
   return (
@@ -71,6 +89,7 @@ function ListEmployees() {
               <td>{employee.email}</td>
               <td>
                 <button className='btn btn-info' onClick={()=> updateEmployee(employee.id)}>Update</button>
+                <button className="btn btn-danger" style={{marginLeft: "10px"}} onClick={()=> removeEmployee(employee.id)}>Delete</button>
               </td>
             </tr>
           ))}
