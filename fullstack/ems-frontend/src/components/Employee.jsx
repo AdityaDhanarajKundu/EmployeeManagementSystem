@@ -1,14 +1,27 @@
 import { useState } from "react";
+import { createEmployee } from "../services/EmployeeService";
+import {useNavigate} from "react-router-dom";
 
 function Employee() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [fname, setfname] = useState("");
+  const [lname, setlname] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
   function saveEmployee(e){
     e.preventDefault();
-    const employee = {firstName, lastName, email};
+    const employee = {fname, lname, email};
     console.log(employee);
+    createEmployee(employee)
+      .then((response) => {
+        console.log(response);
+        alert("Employee added successfully");
+        navigate("/employees");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Failed to add employee");
+      });  
   }
 
   return (
@@ -28,9 +41,9 @@ function Employee() {
                   placeholder="Enter Employee First Name"
                   name="fname"
                   id="fname"
-                  value={firstName}
+                  value={fname}
                   className="form-control"
-                  onChange={(event) => setFirstName(event.target.value)}
+                  onChange={(event) => setfname(event.target.value)}
                 />
               </div>
               <div className="form-group mb-2">
@@ -42,9 +55,9 @@ function Employee() {
                   placeholder="Enter Employee Last Name"
                   name="lname"
                   id="lname"
-                  value={lastName}
+                  value={lname}
                   className="form-control"
-                  onChange={(event) => setLastName(event.target.value)}
+                  onChange={(event) => setlname(event.target.value)}
                 />
               </div>
               <div className="form-group mb-2">
