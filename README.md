@@ -33,4 +33,4 @@ This project implements a full-stack Employee Management System using Java Sprin
 1. Clone the repository:
 
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/AdityaDhanarajKundu/EmployeeManagementSystem.git
