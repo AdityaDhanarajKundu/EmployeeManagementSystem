@@ -1,12 +1,17 @@
-import { useState } from "react";
-import { createEmployee } from "../services/EmployeeService";
-import {useNavigate, useParams} from "react-router-dom";
+import { useState, useEffect } from "react";
+import {
+  createEmployee,
+  getEmployeeById,
+  updateEmployee,
+} from "../services/EmployeeService";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Employee() {
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
   const [email, setEmail] = useState("");
-  const {id} = useParams();
+
+  const { id } = useParams();
 
   // state variable to hold the form validation errors
   const [errors, setErrors] = useState({
@@ -14,62 +19,91 @@ function Employee() {
     lname: "",
     email: "",
   });
-  
+
   const navigate = useNavigate();
 
-  function saveEmployee(e){
-    e.preventDefault();
-    const employee = {fname, lname, email};
-    console.log(employee);
-
-    if(validateForm()){
-      createEmployee(employee)
+  useEffect(() => {
+    if (id) {
+      getEmployeeById(id)
         .then((response) => {
           console.log(response);
-          alert("Employee added successfully");
-          navigate("/employees");
+          setfname(response.data.fname);
+          setlname(response.data.lname);
+          setEmail(response.data.email);
         })
         .catch((error) => {
-          console.log(error);
-          alert("Failed to add employee");
-        });  
+          console.error(error);
+        });
+    }
+  }, [id]);
+
+  function saveEmployee(e) {
+    e.preventDefault();
+
+    if (validateForm()) {
+      const employee = { fname, lname, email };
+      console.log(employee);
+
+      if (id) {
+        updateEmployee(id, employee)
+          .then((response) => {
+            console.log(response);
+            alert("Employee updated successfully");
+            navigate("/employees");
+          })
+          .catch((error) => {
+            console.log(error);
+            alert("Failed to update employee");
+          });
+      } else {
+        createEmployee(employee)
+          .then((response) => {
+            console.log(response);
+            alert("Employee added successfully");
+            navigate("/employees");
+          })
+          .catch((error) => {
+            console.log(error);
+            alert("Failed to add employee");
+          });
+      }
     }
   }
 
-  function validateForm(){
+  function validateForm() {
     let valid = true;
-    const errorsCopy = {...errors};
+    const errorsCopy = { ...errors };
 
-    if(fname.trim()){
+    if (fname.trim()) {
       errorsCopy.fname = "";
-    }else{
+    } else {
       errorsCopy.fname = "First Name is required";
       valid = false;
     }
 
-    if(lname.trim()){
+    if (lname.trim()) {
       errorsCopy.lname = "";
-    }else{
+    } else {
       errorsCopy.lname = "Last Name is required";
       valid = false;
     }
 
-    if(email.trim()){
+    if (email.trim()) {
       errorsCopy.email = "";
-    }else{
+    } else {
       errorsCopy.email = "Email is required";
       valid = false;
-    }  
+    }
 
     setErrors(errorsCopy);
 
     return valid;
   }
 
-  function pageTitle(){
-    if(id){
+  function pageTitle() {
+    if (id) {
       return <h2 className="text-center">Update Employee</h2>;
-    }else{
+    } else {
       return <h2 className="text-center">Add Employee</h2>;
     }
   }

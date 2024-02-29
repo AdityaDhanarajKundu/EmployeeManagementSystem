@@ -10,3 +10,11 @@ export function getEmployees() {
 export function createEmployee(employee) {
     return axios.post(EMPLOYEE_API_BASE_URL, employee);
 }
+
+export function getEmployeeById(employeeId) {
+    return axios.get(EMPLOYEE_API_BASE_URL + '/' + employeeId);
+}
+
+export function updateEmployee(employeeId, employee) {
+    return axios.put(EMPLOYEE_API_BASE_URL + '/' + employeeId, employee);
+}
