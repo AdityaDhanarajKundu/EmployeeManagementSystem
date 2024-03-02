@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const EMPLOYEE_API_BASE_URL =
-  "http://springboot-mysql-ems-env.eba-cqssvdhy.ap-southeast-2.elasticbeanstalk.com/api/employees";
+  "https://springboot-mysql-ems-env.eba-cqssvdhy.ap-southeast-2.elasticbeanstalk.com/api/employees";
 
 export function getEmployees() {
     return axios.get(EMPLOYEE_API_BASE_URL);
