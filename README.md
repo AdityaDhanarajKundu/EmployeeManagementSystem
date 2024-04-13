@@ -9,6 +9,11 @@ This project implements a full-stack Employee Management System using Java Sprin
 - **Update:** Modify existing employee details.
 - **Delete:** Remove employees from the system.
 
+## Images 
+
+<img src="https://media.licdn.com/dms/image/D562DAQFOCD_3PzgDng/profile-treasury-image-shrink_800_800/0/1709228413709?e=1713596400&v=beta&t=oxAAd9uinB0UadDoEIC6C_vbW8Fhidc7fjuLmzkbWTw" />
+<img src="https://media.licdn.com/dms/image/D562DAQHmmILbi45FzQ/profile-treasury-image-shrink_800_800/0/1709228387178?e=1713596400&v=beta&t=zbeapHF85TV8skl5_XKb39AJMVMvOPB4jqI29qDgTyI" />
+
 ## Technologies Used
 
 - **Backend:**
